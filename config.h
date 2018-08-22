@@ -5,19 +5,18 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 2;        /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Input:size=9" };
-static const char dmenufont[]       = "Input:size=9";
+static const char *fonts[]          = { "xos4 Terminus:size=9", "Wuncon Siji:size=11" };
+static const char dmenufont[]       = "xos4 Terminus:size=9";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
 static const char col_black[]       = "#000000";
 static const char col_white[]       = "#ffffff";
 static const char *colors[][3]      = {
   /*               fg         bg         border   */
-  [SchemeNorm] = { col_gray1, col_black, col_black },
-  [SchemeSel]  = { col_white, col_black,  col_black  },
+  [SchemeNorm] = { col_gray3, col_black, col_black },
+  [SchemeSel]  = { col_white, col_gray1, col_black  },
 };
 
 /* tagging */
@@ -30,8 +29,8 @@ static const Rule rules[] = {
    */
   /* class      instance    title       tags mask     isfloating   monitor */
   { "Gimp",     NULL,       NULL,       0,            1,           -1 },
-  { "Firefox",  NULL,       NULL,       0,            0,           -1 },
-  { "st",       NULL,       NULL,       0 >> 2,       0,           -1 },
+  { "Firefox",  NULL,       NULL,       1,            0,           -1 },
+  { "st",       NULL,       NULL,       2,            0,           -1 },
 };
 
 /* layout(s) */
@@ -63,6 +62,8 @@ static const char *slock[] = { "slock", NULL };
 static const char *dmenucmd[] = { "/home/x24/suckless/dmenu/dmenu.sh", "run", NULL };
 static const char *firefoxcmd[] = { "/home/x24/suckless/dmenu/dmenu.sh", "firefox", NULL };
 static const char *termcmd[]  = { "st", "-e", "tmux", NULL };
+static const char *volupcmd[] = { "amixer", "-M", "set", "Master", "2+"};
+static const char *voldwcmd[] = { "amixer", "-M", "set", "Master", "2-"};
 
 static Key keys[] = {
   /* modifier                     key        function        argument */
@@ -70,6 +71,8 @@ static Key keys[] = {
   { MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
   { MODKEY,                       XK_f,      spawn,          {.v = firefoxcmd } },
   { MODKEY,                       XK_Home,   spawn,          {.v = slock } },
+  { 0,                         XF86XK_AudioLowerVolume, spawn, {.v = voldwcmd}},
+  { 0,                         XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd}},
   { MODKEY,                       XK_b,      togglebar,      {0} },
   { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
   { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -84,7 +87,7 @@ static Key keys[] = {
   { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
   //{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
   { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-  { ControlMask,                  XK_space,  setlayout,      {0} },
+  //{ ControlMask,                  XK_space,  setlayout,      {0} },
   { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
   { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
   { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
